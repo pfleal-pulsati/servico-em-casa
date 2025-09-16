@@ -44,16 +44,16 @@ const Login = () => {
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">
               <HomeIcon className="w-8 h-8 text-primary" />
-              <h1 className="text-3xl font-bold text-primary">Serviço em Casa</h1>
+              <h1 className="text-3xl font-montserrat font-bold text-primary">Serviço em Casa</h1>
             </div>
-            <p className="text-base-content/70 mt-2">Entre na sua conta</p>
+            <p className="text-base-content/70 mt-2 font-lato">Entre na sua conta</p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Username */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Usuário ou Email</span>
+                <span className="label-text font-montserrat font-medium">Usuário ou Email</span>
               </label>
               <input
                 type="text"
@@ -77,7 +77,7 @@ const Login = () => {
             {/* Password */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Senha</span>
+                <span className="label-text font-montserrat font-medium">Senha</span>
               </label>
               <div className="relative">
                 <input
@@ -125,7 +125,7 @@ const Login = () => {
             <div className="form-control mt-6">
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${
+                className={`btn-primary w-full ${
                   isLoading ? 'loading' : ''
                 }`}
                 disabled={isLoading}
@@ -138,16 +138,16 @@ const Login = () => {
           <div className="divider">OU</div>
 
           <div className="text-center">
-            <p className="text-sm text-base-content/70">
+            <p className="text-sm text-base-content/70 font-lato">
               Não tem uma conta?{' '}
-              <Link to="/register" className="link link-primary">
+              <Link to="/register" className="link link-primary font-montserrat font-medium">
                 Cadastre-se
               </Link>
             </p>
           </div>
 
           <div className="text-center mt-4">
-            <Link to="/" className="link link-neutral text-sm">
+            <Link to="/" className="link link-neutral text-sm font-lato">
               ← Voltar para o início
             </Link>
           </div>

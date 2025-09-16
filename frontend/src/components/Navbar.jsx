@@ -137,9 +137,9 @@ const Navbar = () => {
         </div>
 
         {/* Logo */}
-        <Link to={user ? (user.userType === 'client' ? '/client/dashboard' : '/dashboard') : '/'} className="btn btn-ghost text-xl font-bold">
-          <HomeIcon className="w-6 h-6 text-primary mr-2" />
-          <span className="text-primary">Serviço em Casa</span>
+        <Link to={user ? (user.userType === 'client' ? '/client/dashboard' : '/dashboard') : '/'} className="btn btn-ghost text-xl font-montserrat font-bold hover:bg-transparent">
+          <HomeIcon className="w-7 h-7 text-primary mr-2" />
+          <span className="text-primary font-montserrat font-bold text-xl">Serviço em Casa</span>
         </Link>
       </div>
 
@@ -252,11 +252,11 @@ const Navbar = () => {
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
-            <Link to="/login" className="btn btn-ghost">
+          <div className="flex items-center gap-3">
+            <Link to="/login" className="btn btn-ghost font-montserrat font-medium hover:text-primary">
               Entrar
             </Link>
-            <Link to="/register" className="btn btn-primary">
+            <Link to="/register" className="btn-primary">
               Cadastrar
             </Link>
           </div>

@@ -113,10 +113,10 @@ const Dashboard = () => {
 
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-3xl font-montserrat font-bold mb-2">
             Olá, {user?.first_name || 'Cliente'}! 👋
           </h1>
-          <p className="text-base-content/70">
+          <p className="text-base-content/70 font-lato">
             Gerencie suas solicitações de serviços e acompanhe o progresso.
           </p>
         </div>
@@ -127,7 +127,7 @@ const Dashboard = () => {
             <div className="stat-figure text-primary">
               <ChartBarIcon className="h-8 w-8" />
             </div>
-            <div className="stat-title">Total de Solicitações</div>
+            <div className="stat-title font-montserrat">Total de Solicitações</div>
             <div className="stat-value text-primary">{stats.total}</div>
             <div className="stat-desc">Todas as suas solicitações</div>
           </div>
@@ -136,7 +136,7 @@ const Dashboard = () => {
             <div className="stat-figure text-warning">
               <ClockIcon className="h-8 w-8" />
             </div>
-            <div className="stat-title">Pendentes</div>
+            <div className="stat-title font-montserrat">Pendentes</div>
             <div className="stat-value text-warning">{stats.pending}</div>
             <div className="stat-desc">Aguardando propostas</div>
           </div>
@@ -145,7 +145,7 @@ const Dashboard = () => {
             <div className="stat-figure text-info">
               <ClockIcon className="h-8 w-8" />
             </div>
-            <div className="stat-title">Em Andamento</div>
+            <div className="stat-title font-montserrat">Em Andamento</div>
             <div className="stat-value text-info">{stats.in_progress}</div>
             <div className="stat-desc">Sendo executadas</div>
           </div>
@@ -154,7 +154,7 @@ const Dashboard = () => {
             <div className="stat-figure text-success">
               <CheckCircleIcon className="h-8 w-8" />
             </div>
-            <div className="stat-title">Concluídas</div>
+            <div className="stat-title font-montserrat">Concluídas</div>
             <div className="stat-value text-success">{stats.completed}</div>
             <div className="stat-desc">Serviços finalizados</div>
           </div>

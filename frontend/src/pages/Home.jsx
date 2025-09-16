@@ -64,20 +64,20 @@ const Home = () => {
       <section className="hero min-h-[80vh] bg-gradient-to-br from-primary/10 to-secondary/10">
         <div className="hero-content text-center">
           <div className="max-w-4xl">
-            <h1 className="text-5xl font-bold mb-6">
+            <h1 className="text-5xl font-montserrat font-bold mb-6">
               Conectamos você aos melhores
               <span className="text-primary"> profissionais domésticos</span>
             </h1>
-            <p className="text-xl mb-8 text-base-content/70">
+            <p className="text-xl mb-8 text-base-content/70 font-lato">
               Encontre prestadores de serviços qualificados para sua casa.
               Rápido, seguro e confiável.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/register" className="btn btn-primary btn-lg">
+              <Link to="/register" className="btn-primary btn-lg">
                 Começar Agora
                 <ArrowRightIcon className="h-5 w-5 ml-2" />
               </Link>
-              <Link to="/login" className="btn btn-outline btn-lg">
+              <Link to="/login" className="btn-secondary btn-lg">
                 Sou Prestador
               </Link>
             </div>
@@ -89,8 +89,8 @@ const Home = () => {
       <section className="py-20 bg-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Por que escolher o Serviço em Casa?</h2>
-            <p className="text-xl text-base-content/70">
+            <h2 className="text-4xl font-montserrat font-bold mb-4">Por que escolher o Serviço em Casa?</h2>
+            <p className="text-xl text-base-content/70 font-lato">
               A plataforma que conecta clientes e prestadores de forma segura e eficiente
             </p>
           </div>
@@ -102,10 +102,10 @@ const Home = () => {
                   <div className="text-primary mb-4 flex justify-center">
                     {feature.icon}
                   </div>
-                  <h3 className="card-title justify-center text-lg mb-2">
+                  <h3 className="card-title justify-center text-lg mb-2 font-montserrat">
                     {feature.title}
                   </h3>
-                  <p className="text-base-content/70">
+                  <p className="text-base-content/70 font-lato">
                     {feature.description}
                   </p>
                 </div>
@@ -119,8 +119,8 @@ const Home = () => {
       <section className="py-20 bg-base-200">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Como funciona</h2>
-            <p className="text-xl text-base-content/70">
+            <h2 className="text-4xl font-montserrat font-bold mb-4">Como funciona</h2>
+            <p className="text-xl text-base-content/70 font-lato">
               Em poucos passos você encontra o profissional ideal
             </p>
           </div>
@@ -131,10 +131,10 @@ const Home = () => {
                 <div className="w-16 h-16 bg-primary text-primary-content rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   {step.number}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-montserrat font-semibold mb-2">
                   {step.title}
                 </h3>
-                <p className="text-base-content/70">
+                <p className="text-base-content/70 font-lato">
                   {step.description}
                 </p>
               </div>
@@ -146,17 +146,17 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-content">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-montserrat font-bold mb-4">
             Pronto para começar?
           </h2>
-          <p className="text-xl mb-8 opacity-90">
+          <p className="text-xl mb-8 opacity-90 font-lato">
             Junte-se a milhares de clientes e prestadores satisfeitos
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register" className="btn btn-secondary btn-lg">
+            <Link to="/register" className="btn-secondary btn-lg">
               Criar Conta Grátis
             </Link>
-            <Link to="/login" className="btn btn-outline btn-lg text-primary-content border-primary-content hover:bg-primary-content hover:text-primary">
+            <Link to="/login" className="btn btn-outline btn-lg text-primary-content border-primary-content hover:bg-primary-content hover:text-primary font-montserrat">
               Fazer Login
             </Link>
           </div>

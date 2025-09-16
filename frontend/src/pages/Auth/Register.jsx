@@ -74,16 +74,16 @@ const Register = () => {
             <div className="text-center mb-6">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <HomeIcon className="w-8 h-8 text-primary" />
-                <h1 className="text-3xl font-bold text-primary">Serviço em Casa</h1>
+                <h1 className="text-3xl font-montserrat font-bold text-primary">Serviço em Casa</h1>
               </div>
-              <p className="text-base-content/70 mt-2">Crie sua conta</p>
+              <p className="text-base-content/70 mt-2 font-lato">Crie sua conta</p>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* User Type */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Tipo de usuário</span>
+                  <span className="label-text font-montserrat font-medium">Tipo de usuário</span>
                 </label>
                 <select
                   className={`select select-bordered w-full ${

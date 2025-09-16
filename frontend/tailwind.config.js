@@ -7,7 +7,18 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'lato': ['Lato', 'sans-serif'],
+        'sans': ['Lato', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      colors: {
+        'brand': {
+          'turquoise': '#66B2B2',
+          'mint': '#A8D8B9',
+          'gray': '#F0F0F0',
+          'yellow': '#FFD700',
+          'peach': '#FFAB91',
+        },
       },
     },
   },
@@ -18,16 +29,16 @@ export default {
     themes: [
       {
         light: {
-          "primary": "#3b82f6",
-          "secondary": "#10b981",
-          "accent": "#f59e0b",
+          "primary": "#66B2B2",
+          "secondary": "#A8D8B9",
+          "accent": "#FFAB91",
           "neutral": "#374151",
           "base-100": "#ffffff",
-          "base-200": "#f9fafb",
-          "base-300": "#f3f4f6",
-          "info": "#06b6d4",
-          "success": "#10b981",
-          "warning": "#f59e0b",
+          "base-200": "#F0F0F0",
+          "base-300": "#e5e5e5",
+          "info": "#66B2B2",
+          "success": "#A8D8B9",
+          "warning": "#FFD700",
           "error": "#ef4444",
         },
       },

@@ -19,13 +19,13 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <HomeIcon className="w-8 h-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">Serviço em Casa</span>
+              <span className="text-2xl font-montserrat font-bold text-primary">Serviço em Casa</span>
             </div>
-            <p className="text-base-content/70 text-sm leading-relaxed">
+            <p className="text-base-content/70 text-sm leading-relaxed font-lato">
               Conectando pessoas e serviços de forma simples e eficiente. 
               Encontre os melhores prestadores ou ofereça seus serviços.
             </p>
-            <div className="flex items-center gap-2 text-sm text-base-content/60">
+            <div className="flex items-center gap-2 text-sm text-base-content/60 font-lato">
               <MapPinIcon className="w-4 h-4" />
               <span>São Paulo, Brasil</span>
             </div>
@@ -33,7 +33,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-base-content">Links Rápidos</h3>
+            <h3 className="font-montserrat font-semibold text-base-content">Links Rápidos</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link 
@@ -72,7 +72,7 @@ const Footer = () => {
 
           {/* Services */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-base-content">Categorias</h3>
+            <h3 className="font-montserrat font-semibold text-base-content">Categorias</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <span className="text-base-content/70">Limpeza</span>
@@ -97,7 +97,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-base-content">Contato</h3>
+            <h3 className="font-montserrat font-semibold text-base-content">Contato</h3>
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-2 text-base-content/70">
                 <PhoneIcon className="w-4 h-4" />
@@ -111,7 +111,7 @@ const Footer = () => {
             
             {/* Social Media */}
             <div className="space-y-2">
-              <h4 className="font-medium text-base-content text-sm">Redes Sociais</h4>
+              <h4 className="font-montserrat font-medium text-base-content text-sm">Redes Sociais</h4>
               <div className="flex gap-2">
                 <a 
                   href="#" 
