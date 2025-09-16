@@ -48,15 +48,15 @@
   }
   
   .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-white font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
+    @apply bg-primary hover:bg-turquoise-600 text-white font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
   }
   
   .btn-secondary {
-    @apply bg-secondary hover:bg-secondary/90 text-gray-800 font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
+    @apply bg-secondary hover:bg-mint-600 text-gray-800 font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
   }
   
   .btn-accent {
-    @apply bg-accent hover:bg-accent/90 text-white font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
+    @apply bg-accent hover:bg-yellow-600 text-white font-montserrat font-medium rounded-lg px-6 py-3 transition-all duration-200;
   }
   
   .card-hover {
@@ -80,6 +80,6 @@
   }
   
   .brand-gradient-bg {
-    @apply bg-gradient-to-br from-primary/5 to-secondary/5;
+    @apply bg-gradient-to-br from-turquoise-50 to-mint-50;
   }
 }
