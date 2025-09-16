@@ -6,8 +6,8 @@ Plataforma de serviços domésticos que conecta clientes e prestadores de servi�
 
 O projeto é composto por:
 
-- **Backend (pilipi-back)**: API REST desenvolvida em Django com Django REST Framework
-- **Frontend (pilipi-front)**: Aplicação web desenvolvida em React com Vite e TailwindCSS
+- **Backend (backend)**: API REST desenvolvida em Django com Django REST Framework
+- **Frontend (frontend)**: Aplicação web desenvolvida em React com Vite e TailwindCSS
 
 ## 🚀 Tecnologias
 
@@ -53,7 +53,7 @@ O projeto é composto por:
 ### Backend (Django)
 
 ```bash
-cd pilipi-back
+cd backend
 
 # Criar ambiente virtual
 python -m venv venv
@@ -77,7 +77,7 @@ python manage.py runserver
 ### Frontend (React)
 
 ```bash
-cd pilipi-front
+cd frontend
 
 # Instalar dependências
 npm install
