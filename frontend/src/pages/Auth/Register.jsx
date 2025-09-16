@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/react/24/outline'
-import apiService from '../../services/api'
+import { categoriesAPI } from '../../services/api'
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -27,8 +27,8 @@ const Register = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await apiService.getCategories()
-        setCategories(response.data)
+        const response = await categoriesAPI.getAll()
+        setCategories(response)
       } catch (error) {
         console.error('Erro ao carregar categorias:', error)
       }

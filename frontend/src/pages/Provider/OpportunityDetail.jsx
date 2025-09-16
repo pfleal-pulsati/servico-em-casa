@@ -29,13 +29,17 @@ const OpportunityDetail = () => {
   const fetchOpportunityDetails = async () => {
     try {
       setLoading(true);
+      console.log('Buscando oportunidade com ID:', id);
       const [opportunityRes, proposalsRes] = await Promise.all([
-        apiService.getServiceRequest(id),
+        apiService.serviceRequests.getById(id),
         apiService.getServiceRequestProposals(id)
       ]);
       
-      setOpportunity(opportunityRes.data);
-      setProposals(proposalsRes.data.proposals || []);
+      console.log('Resposta da oportunidade:', opportunityRes);
+      console.log('Resposta das propostas:', proposalsRes);
+      
+      setOpportunity(opportunityRes);
+      setProposals(proposalsRes.results || []);
     } catch (error) {
       console.error('Erro ao carregar detalhes da oportunidade:', error);
     } finally {
@@ -88,6 +92,7 @@ const OpportunityDetail = () => {
   }
 
   if (!opportunity) {
+    console.log('Opportunity é falsy:', opportunity, 'Loading:', loading);
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
@@ -95,7 +100,7 @@ const OpportunityDetail = () => {
             Oportunidade não encontrada
           </h2>
           <button 
-            onClick={() => navigate('/provider/opportunities')}
+            onClick={() => navigate('/opportunities')}
             className="btn btn-primary"
           >
             Voltar às oportunidades

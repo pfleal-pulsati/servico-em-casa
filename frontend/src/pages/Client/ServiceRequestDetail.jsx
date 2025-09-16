@@ -57,7 +57,9 @@ const ServiceRequestDetail = () => {
   const fetchProposals = async () => {
     try {
       const response = await apiService.assignments.getAll({ service_request: id })
-      setProposals(response || [])
+      // Garantir que proposals seja sempre um array
+      const proposalsData = response?.results || response?.data || response || []
+      setProposals(Array.isArray(proposalsData) ? proposalsData : [])
     } catch (error) {
       console.error('Erro ao carregar propostas:', error)
       setProposals([])

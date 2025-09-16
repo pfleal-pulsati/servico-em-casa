@@ -47,7 +47,7 @@ const CreateProposal = () => {
     try {
       setLoading(true);
       const [opportunityRes, proposalsRes] = await Promise.all([
-        apiService.getServiceRequest(id),
+        apiService.serviceRequests.getById(id),
         apiService.getServiceRequestProposals(id)
       ]);
       

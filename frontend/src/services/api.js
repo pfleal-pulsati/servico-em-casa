@@ -68,15 +68,15 @@ export const serviceRequestsAPI = {
 
 // Serviços de Propostas/Atribuições
 export const assignmentsAPI = {
-  getAll: (params = {}) => api.get('/services/assignments/', { params }),
-  getById: (id) => api.get(`/services/assignments/${id}/`),
-  create: (assignmentData) => api.post('/services/assignments/', assignmentData),
-  update: (id, assignmentData) => api.patch(`/services/assignments/${id}/`, assignmentData),
-  accept: (id) => api.post(`/services/assignments/${id}/accept/`),
-  start: (id) => api.post(`/services/assignments/${id}/start/`),
-  complete: (id) => api.post(`/services/assignments/${id}/complete/`),
-  cancel: (id) => api.post(`/services/assignments/${id}/cancel/`),
-  getMyAssignments: () => api.get('/services/assignments/my/'),
+  getAll: (params = {}) => api.get('/assignments/', { params }),
+  getById: (id) => api.get(`/assignments/${id}/`),
+  create: (assignmentData) => api.post('/assignments/', assignmentData),
+  update: (id, assignmentData) => api.patch(`/assignments/${id}/`, assignmentData),
+  accept: (id) => api.post(`/assignments/${id}/accept/`),
+  start: (id) => api.post(`/assignments/${id}/start/`),
+  complete: (id) => api.post(`/assignments/${id}/complete/`),
+  cancel: (id) => api.post(`/assignments/${id}/cancel/`),
+  getMyAssignments: () => api.get('/assignments/my/'),
 }
 
 // Serviços de Prestadores
@@ -89,33 +89,32 @@ export const providersAPI = {
 
 // Serviços de Avaliações
 export const reviewsAPI = {
-  getAll: (params = {}) => api.get('/services/reviews/', { params }),
-  getById: (id) => api.get(`/services/reviews/${id}/`),
-  create: (reviewData) => api.post('/services/reviews/', reviewData),
-  update: (id, reviewData) => api.patch(`/services/reviews/${id}/`, reviewData),
-  delete: (id) => api.delete(`/services/reviews/${id}/`),
-  getByProvider: (providerId) => api.get(`/services/reviews/provider/${providerId}/`),
-  getMyReviews: () => api.get('/services/reviews/my/'),
-  getReviewStats: (userId) => api.get(`/services/reviews/stats/${userId}/`),
-  getJobReview: (jobId) => api.get(`/services/reviews/job/${jobId}/`),
+  getAll: (params = {}) => api.get('/reviews/', { params }),
+  getById: (id) => api.get(`/reviews/${id}/`),
+  create: (reviewData) => api.post('/reviews/', reviewData),
+  update: (id, reviewData) => api.patch(`/reviews/${id}/`, reviewData),
+  delete: (id) => api.delete(`/reviews/${id}/`),
+  getByProvider: (providerId) => api.get(`/reviews/provider/${providerId}/`),
+  getMyReviews: () => api.get('/reviews/my/'),
+  getReviewStats: (userId) => api.get(`/reviews/stats/${userId}/`),
+  getJobReview: (jobId) => api.get(`/reviews/job/${jobId}/`),
 }
 
 // Serviços de Notificações
 export const notificationsAPI = {
   getAll: (params = {}) => api.get('/notifications/', { params }),
-  markAsRead: (id) => api.patch(`/notifications/${id}/`, { is_read: true }),
+  getById: (id) => api.get(`/notifications/${id}/`),
+  markAsRead: (id) => api.patch(`/notifications/${id}/`, { read: true }),
   markAllAsRead: () => api.post('/notifications/mark-read/'),
-  getUnreadCount: () => api.get('/notifications/unread-count/'),
   delete: (id) => api.delete(`/notifications/${id}/`),
-  deleteAll: () => api.delete('/notifications/'),
-  bulkUpdate: (data) => api.patch('/notifications/bulk/', data),
+  getUnreadCount: () => api.get('/notifications/unread-count/'),
 }
 
 // Serviços de Estatísticas
 export const statisticsAPI = {
-  getClientStats: () => api.get('/services/statistics/client/'),
-  getProviderStats: () => api.get('/services/statistics/provider/'),
-  getDashboardData: () => api.get('/services/statistics/dashboard/'),
+  getClientStats: () => api.get('/statistics/'),
+  getProviderStats: () => api.get('/statistics/'),
+  getDashboardData: () => api.get('/statistics/'),
 }
 
 // Objeto principal com todos os serviços
@@ -135,6 +134,15 @@ export const apiService = {
   createServiceRequest: (requestData) => serviceRequestsAPI.create(requestData),
   getClientStats: () => statisticsAPI.getClientStats(),
   getProviderStats: () => statisticsAPI.getProviderStats(),
+  
+  // Métodos que estavam faltando
+  getOpportunities: (params) => serviceRequestsAPI.getAll(params),
+  getMyProposals: (params) => assignmentsAPI.getAll(params),
+  getMyJobs: (params) => assignmentsAPI.getAll({ ...params, status: 'assigned' }),
+  completeJob: (id) => assignmentsAPI.complete(id),
+  createProposal: (proposalData) => assignmentsAPI.create(proposalData),
+  getServiceRequest: (id) => serviceRequestsAPI.getById(id),
+  getServiceRequestProposals: (id) => assignmentsAPI.getAll({ service_request: id }),
 }
 
 export default api

@@ -36,8 +36,11 @@ const EditServiceRequest = () => {
   const budgetMax = watch('budget_max')
 
   useEffect(() => {
-    fetchCategories()
-    fetchServiceRequest()
+    const loadData = async () => {
+      await fetchCategories()
+      await fetchServiceRequest()
+    }
+    loadData()
   }, [id])
 
   const fetchCategories = async () => {
@@ -59,7 +62,7 @@ const EditServiceRequest = () => {
       reset({
         title: request.title,
         description: request.description,
-        category: request.category.id,
+        category: String(request.category), // A categoria já vem como ID diretamente
         priority: request.priority,
         budget_min: request.budget_min,
         budget_max: request.budget_max,

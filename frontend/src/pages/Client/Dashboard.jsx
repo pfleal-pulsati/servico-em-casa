@@ -34,18 +34,30 @@ const Dashboard = () => {
   const fetchServiceRequests = async () => {
     try {
       const response = await apiService.getServiceRequests()
-      setServiceRequests(response.data.results || response.data)
+      setServiceRequests(response.data?.results || response.data || [])
     } catch (error) {
       console.error('Erro ao carregar solicitações:', error)
+      setServiceRequests([])
     }
   }
 
   const fetchStats = async () => {
     try {
       const response = await apiService.getClientStats()
-      setStats(response.data)
+      setStats({
+        total: response.data?.total || 0,
+        pending: response.data?.pending || 0,
+        in_progress: response.data?.in_progress || 0,
+        completed: response.data?.completed || 0
+      })
     } catch (error) {
       console.error('Erro ao carregar estatísticas:', error)
+      setStats({
+        total: 0,
+        pending: 0,
+        in_progress: 0,
+        completed: 0
+      })
     } finally {
       setLoading(false)
     }

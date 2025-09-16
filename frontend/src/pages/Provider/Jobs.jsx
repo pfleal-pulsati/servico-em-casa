@@ -60,11 +60,13 @@ const Jobs = () => {
       });
       
       const response = await apiService.getMyJobs(params);
-      setJobs(response.data.jobs || []);
+      // A API de assignments retorna os dados diretamente ou em results
+      const jobsData = response.data?.results || response.data || response || [];
+      setJobs(Array.isArray(jobsData) ? jobsData : []);
       setPagination(prev => ({
         ...prev,
-        total: response.data.total || 0,
-        totalPages: response.data.totalPages || 0
+        total: response.data?.count || jobsData.length || 0,
+        totalPages: Math.ceil((response.data?.count || jobsData.length || 0) / pagination.limit)
       }));
     } catch (error) {
       console.error('Erro ao carregar trabalhos:', error);
@@ -467,7 +469,7 @@ const Jobs = () => {
               Limpar filtros
             </button>
             <Link 
-              to="/provider/opportunities"
+              to="/opportunities"
               className="btn btn-primary"
             >
               Ver oportunidades

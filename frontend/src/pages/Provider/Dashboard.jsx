@@ -39,11 +39,29 @@ const Dashboard = () => {
         apiService.getMyProposals({ limit: 5 })
       ]);
       
-      setStats(statsRes.data);
-      setOpportunities(opportunitiesRes.data.requests || []);
-      setProposals(proposalsRes.data.proposals || []);
+      setStats(statsRes.data || {
+        totalOpportunities: 0,
+        pendingProposals: 0,
+        activeJobs: 0,
+        completedJobs: 0,
+        totalEarnings: 0,
+        averageRating: 0
+      });
+      setOpportunities((opportunitiesRes.data && opportunitiesRes.data.requests) || []);
+      setProposals((proposalsRes.data && proposalsRes.data.proposals) || []);
     } catch (error) {
       console.error('Erro ao carregar dados do dashboard:', error);
+      // Definir valores padrão em caso de erro
+      setStats({
+        totalOpportunities: 0,
+        pendingProposals: 0,
+        activeJobs: 0,
+        completedJobs: 0,
+        totalEarnings: 0,
+        averageRating: 0
+      });
+      setOpportunities([]);
+      setProposals([]);
     } finally {
       setLoading(false);
     }

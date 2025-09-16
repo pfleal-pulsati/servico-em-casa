@@ -43,7 +43,7 @@ const Opportunities = () => {
   const fetchCategories = async () => {
     try {
       const response = await apiService.getCategories();
-      setCategories(response.data.categories || []);
+      setCategories(response.results || response.data?.results || response.data?.categories || []);
     } catch (error) {
       console.error('Erro ao carregar categorias:', error);
     }
@@ -66,11 +66,18 @@ const Opportunities = () => {
       });
       
       const response = await apiService.getOpportunities(params);
-      setOpportunities(response.data.requests || []);
+      // Handle nested results structure
+      let opportunitiesData = [];
+      if (Array.isArray(response.results)) {
+        opportunitiesData = response.results;
+      } else if (response.results && Array.isArray(response.results.results)) {
+        opportunitiesData = response.results.results;
+      }
+      setOpportunities(opportunitiesData);
       setPagination(prev => ({
         ...prev,
-        total: response.data.total || 0,
-        totalPages: response.data.totalPages || 0
+        total: response.count || 0,
+        totalPages: Math.ceil((response.count || 0) / pagination.limit)
       }));
     } catch (error) {
       console.error('Erro ao carregar oportunidades:', error);
@@ -110,7 +117,26 @@ const Opportunities = () => {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('pt-BR');
+    if (!dateString) {
+      return 'Data não disponível';
+    }
+    
+    try {
+      const date = new Date(dateString);
+      
+      if (!isNaN(date.getTime())) {
+        return date.toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+      }
+      
+      return 'Data não disponível';
+    } catch (error) {
+      console.error('Erro ao formatar data:', error);
+      return 'Data não disponível';
+    }
   };
 
   return (
@@ -302,7 +328,11 @@ const Opportunities = () => {
                   <div className="flex items-center gap-2 text-sm">
                     <CurrencyDollarIcon className="w-4 h-4 text-success" />
                     <span className="font-semibold text-success">
-                      R$ {opportunity.budget?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                      {opportunity.budget_min && opportunity.budget_max ? (
+                        opportunity.budget_min === opportunity.budget_max ? 
+                          `R$ ${opportunity.budget_min.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` :
+                          `R$ ${opportunity.budget_min.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} - R$ ${opportunity.budget_max.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                      ) : 'Orçamento a combinar'}
                     </span>
                   </div>
                   
@@ -313,16 +343,16 @@ const Opportunities = () => {
                     </div>
                   )}
                   
-                  {opportunity.address && (
+                  {opportunity.city && (
                     <div className="flex items-center gap-2 text-sm text-base-content/70">
                       <MapPinIcon className="w-4 h-4" />
-                      <span>{opportunity.address.city}, {opportunity.address.state}</span>
+                      <span>{opportunity.city}{opportunity.state ? `, ${opportunity.state}` : ''}</span>
                     </div>
                   )}
                   
                   <div className="flex items-center gap-2 text-sm text-base-content/70">
                     <ClockIcon className="w-4 h-4" />
-                    <span>Publicado em {formatDate(opportunity.createdAt)}</span>
+                    <span>Publicado em {formatDate(opportunity.created_at)}</span>
                   </div>
                 </div>
 
@@ -338,14 +368,14 @@ const Opportunities = () => {
                 {/* Actions */}
                 <div className="card-actions justify-end">
                   <Link 
-                    to={`/provider/opportunities/${opportunity.id}`}
+                    to={`/opportunities/${opportunity.id}`}
                     className="btn btn-sm btn-ghost"
                   >
                     <EyeIcon className="w-4 h-4" />
                     Ver detalhes
                   </Link>
                   <Link 
-                    to={`/provider/opportunities/${opportunity.id}/proposal`}
+                    to={`/opportunities/${opportunity.id}/proposal`}
                     className="btn btn-sm btn-primary"
                   >
                     <PlusIcon className="w-4 h-4" />

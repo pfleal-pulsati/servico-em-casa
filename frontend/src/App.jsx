@@ -31,7 +31,7 @@ import Proposals from './pages/Provider/Proposals';
 import Jobs from './pages/Provider/Jobs';
 import ProviderProfile from './pages/Provider/Profile';
 
-function App() {
+function AppContent() {
   const { loading, isAuthenticated, isClient, isProvider } = useAuth()
 
   if (loading) {
@@ -141,6 +141,16 @@ function App() {
           } 
         />
         <Route 
+          path="/opportunities/:id/proposal" 
+          element={
+            <ProtectedRoute requireProvider>
+              <Layout>
+                <CreateProposal />
+              </Layout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
           path="/my-services" 
           element={
             <ProtectedRoute requireProvider>
@@ -199,6 +209,31 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            theme: {
+              primary: 'green',
+              secondary: 'black',
+            },
+          },
+        }}
+      />
+    </AuthProvider>
   )
 }
 
