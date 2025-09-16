@@ -22,6 +22,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
         
         return token
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        
+        # Adicionar dados do usuário na resposta
+        data['user'] = UserProfileSerializer(self.user).data
+        
+        return data
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

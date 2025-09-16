@@ -115,7 +115,7 @@ class ServiceRequestListCreateView(generics.ListCreateAPIView):
         elif user.user_type == 'provider':
             # Prestadores veem solicitações abertas e suas próprias propostas
             return ServiceRequest.objects.filter(
-                Q(status='open') | Q(serviceassignment__provider__user=user)
+                Q(status='open') | Q(assignment__provider=user)
             ).distinct()
         else:
             # Administradores veem todas
@@ -154,7 +154,7 @@ class ServiceRequestDetailView(generics.RetrieveUpdateDestroyAPIView):
             return ServiceRequest.objects.filter(client=user)
         elif user.user_type == 'provider':
             return ServiceRequest.objects.filter(
-                Q(status='open') | Q(serviceassignment__provider__user=user)
+                Q(status='open') | Q(assignment__provider=user)
             ).distinct()
         else:
             return ServiceRequest.objects.all()
@@ -206,7 +206,7 @@ class ServiceAssignmentListCreateView(generics.ListCreateAPIView):
             return ServiceAssignment.objects.filter(service_request__client=user)
         elif user.user_type == 'provider':
             # Prestadores veem apenas suas próprias propostas
-            return ServiceAssignment.objects.filter(provider__user=user)
+            return ServiceAssignment.objects.filter(provider=user)
         else:
             return ServiceAssignment.objects.all()
 
