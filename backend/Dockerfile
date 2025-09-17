@@ -22,11 +22,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . /app/
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# Make start script executable
+COPY start.sh /app/
+RUN chmod +x /app/start.sh
 
-# Expose port
-EXPOSE 8000
+# Expose port (Railway uses PORT environment variable)
+EXPOSE $PORT
 
-# Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "service_platform.wsgi:application"]
+# Run the application using our start script
+CMD ["./start.sh"]
