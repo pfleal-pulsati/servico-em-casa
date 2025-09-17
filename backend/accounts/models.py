@@ -50,6 +50,12 @@ class User(AbstractUser):
         verbose_name='Endereço Completo'
     )
     
+    password_is_temporary = models.BooleanField(
+        default=False,
+        verbose_name='Senha Temporária',
+        help_text='Indica se a senha atual é temporária e deve ser alterada no próximo login'
+    )
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

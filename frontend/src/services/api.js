@@ -32,9 +32,12 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Token expirado ou inválido
-      localStorage.removeItem('token')
-      window.location.href = '/login'
+      // Não redirecionar se for erro na rota de login (pode ser senha temporária)
+      if (!error.config?.url?.includes('/auth/login/')) {
+        // Token expirado ou inválido em outras rotas
+        localStorage.removeItem('token')
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }
@@ -143,6 +146,9 @@ export const apiService = {
   createProposal: (proposalData) => assignmentsAPI.create(proposalData),
   getServiceRequest: (id) => serviceRequestsAPI.getById(id),
   getServiceRequestProposals: (id) => assignmentsAPI.getAll({ service_request: id }),
+  
+  // Método de alteração de senha
+  changePassword: (passwordData) => authAPI.changePassword(passwordData),
 }
 
 export default api

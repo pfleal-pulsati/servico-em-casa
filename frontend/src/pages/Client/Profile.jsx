@@ -139,8 +139,9 @@ const Profile = () => {
     setIsLoading(true)
     try {
       await apiService.changePassword({
-        current_password: data.current_password,
-        new_password: data.new_password
+        old_password: data.current_password,
+        new_password: data.new_password,
+        new_password_confirm: data.confirm_password
       })
       
       toast.success('Senha alterada com sucesso!')

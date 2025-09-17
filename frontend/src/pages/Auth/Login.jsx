@@ -26,7 +26,19 @@ const Login = () => {
       })
       
       if (result.success) {
-        navigate('/dashboard')
+        // Verificar se a senha é temporária
+        if (result.password_is_temporary) {
+          navigate('/change-password')
+          return
+        }
+        
+        // Verificar se é usuário master (admin com is_staff)
+        const userData = result.user || JSON.parse(localStorage.getItem('user'))
+        if (userData && userData.username === 'admin' && userData.is_staff) {
+          navigate('/master-panel')
+        } else {
+          navigate('/dashboard')
+        }
       } else {
         setError('root', { message: result.error })
       }
@@ -125,7 +137,7 @@ const Login = () => {
             <div className="form-control mt-6">
               <button
                 type="submit"
-                className={`btn-primary w-full ${
+                className={`btn btn-primary w-full ${
                   isLoading ? 'loading' : ''
                 }`}
                 disabled={isLoading}

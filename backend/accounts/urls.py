@@ -23,4 +23,8 @@ urlpatterns = [
     path('provider/profile/', views.ProviderProfileView.as_view(), name='provider_profile'),
     path('provider/create/', views.ProviderProfileCreateView.as_view(), name='provider_create'),
     path('providers/', views.ProviderListView.as_view(), name='provider_list'),
+    
+    # Painel Master
+    path('master-panel/', views.master_panel_view, name='master_panel'),
+    path('admin/change-password/', views.admin_change_user_password, name='admin_change_password'),
 ]

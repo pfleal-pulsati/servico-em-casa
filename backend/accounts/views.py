@@ -12,7 +12,8 @@ from .serializers import (
     UserProfileSerializer,
     ServiceCategorySerializer,
     ProviderProfileSerializer,
-    PasswordChangeSerializer
+    PasswordChangeSerializer,
+    MasterPanelUserSerializer
 )
 
 
@@ -189,3 +190,81 @@ class ServiceCategoryListView(generics.ListAPIView):
     queryset = ServiceCategory.objects.filter(is_active=True)
     serializer_class = ServiceCategorySerializer
     permission_classes = [permissions.AllowAny]
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def master_panel_view(request):
+    """View para painel master - apenas para usuário admin"""
+    # Verificar se o usuário é admin
+    if not (request.user.username == 'admin' and request.user.is_staff):
+        return Response({
+            'error': 'Acesso negado. Apenas usuários master podem acessar este painel.'
+        }, status=status.HTTP_403_FORBIDDEN)
+    
+    # Buscar todos os usuários
+    users = User.objects.all().select_related().prefetch_related('provider_profile__service_categories')
+    
+    # Separar clientes e prestadores
+    clients = users.filter(user_type='client')
+    providers = users.filter(user_type='provider')
+    
+    # Serializar os dados
+    clients_data = MasterPanelUserSerializer(clients, many=True).data
+    providers_data = MasterPanelUserSerializer(providers, many=True).data
+    
+    # Adicionar informações de senha (hash) para cada usuário
+    for user_data in clients_data + providers_data:
+        user_obj = users.get(id=user_data['id'])
+        user_data['password_hash'] = user_obj.password
+    
+    return Response({
+        'clients': clients_data,
+        'providers': providers_data,
+        'total_users': users.count(),
+        'total_clients': clients.count(),
+        'total_providers': providers.count()
+    }, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def admin_change_user_password(request):
+    """View para admin alterar senha de qualquer usuário"""
+    # Verificar se o usuário é admin
+    if not (request.user.username == 'admin' and request.user.is_staff):
+        return Response({
+            'error': 'Acesso negado. Apenas usuários master podem alterar senhas.'
+        }, status=status.HTTP_403_FORBIDDEN)
+    
+    user_id = request.data.get('user_id')
+    new_password = request.data.get('new_password')
+    
+    if not user_id or not new_password:
+        return Response({
+            'error': 'user_id e new_password são obrigatórios.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response({
+            'error': 'Usuário não encontrado.'
+        }, status=status.HTTP_404_NOT_FOUND)
+    
+    # Validar senha (mínimo 8 caracteres)
+    if len(new_password) < 8:
+        return Response({
+            'error': 'A senha deve ter pelo menos 8 caracteres.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Alterar senha e marcar como temporária
+    user.set_password(new_password)
+    user.password_is_temporary = True
+    user.save()
+    
+    return Response({
+        'message': f'Senha do usuário {user.get_full_name()} alterada com sucesso. O usuário deverá alterar a senha no próximo login.',
+        'user_id': user.id,
+        'username': user.username
+    }, status=status.HTTP_200_OK)

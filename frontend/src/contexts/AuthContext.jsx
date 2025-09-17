@@ -40,14 +40,19 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authAPI.login(credentials)
-      const { access, user: userData } = response
+      const { access, user: userData, password_is_temporary } = response
       
       localStorage.setItem('token', access)
+      localStorage.setItem('user', JSON.stringify(userData))
       setToken(access)
       setUser(userData)
       
       toast.success('Login realizado com sucesso!')
-      return { success: true }
+      return { 
+        success: true, 
+        user: userData, 
+        password_is_temporary: password_is_temporary 
+      }
     } catch (error) {
       const message = error.response?.data?.detail || 'Erro ao fazer login'
       toast.error(message)
@@ -69,6 +74,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setToken(null)
     setUser(null)
     toast.success('Logout realizado com sucesso!')
@@ -87,6 +93,10 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const isClient = user?.user_type === 'client'
+  const isProvider = user?.user_type === 'provider'
+  const isMaster = user?.username === 'admin' && user?.is_staff === true
+
   const value = {
     user,
     token,
@@ -96,8 +106,9 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
     isAuthenticated: !!token && !!user,
-    isClient: user?.user_type === 'client',
-    isProvider: user?.user_type === 'provider'
+    isClient,
+    isProvider,
+    isMaster
   }
 
   return (

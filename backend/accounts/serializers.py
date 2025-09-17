@@ -26,6 +26,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         
+        # Verificar se a senha é temporária
+        if hasattr(self.user, 'password_is_temporary') and self.user.password_is_temporary:
+            data['password_is_temporary'] = True
+            data['message'] = 'Sua senha é temporária. Você deve alterá-la antes de continuar.'
+        else:
+            data['password_is_temporary'] = False
+        
         # Adicionar dados do usuário na resposta
         data['user'] = UserProfileSerializer(self.user).data
         
@@ -121,9 +128,37 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'username', 'email', 'first_name', 'last_name',
             'user_type', 'phone_number', 'profile_picture',
-            'city', 'state', 'address', 'date_joined', 'is_active'
+            'city', 'state', 'address', 'date_joined', 'is_active', 'is_staff'
         )
-        read_only_fields = ('id', 'username', 'date_joined', 'user_type')
+        read_only_fields = ('id', 'username', 'date_joined', 'user_type', 'is_staff')
+
+
+class MasterPanelUserSerializer(serializers.ModelSerializer):
+    """Serializer para painel master - inclui informações sensíveis"""
+    provider_profile = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = (
+            'id', 'username', 'email', 'first_name', 'last_name',
+            'user_type', 'phone_number', 'city', 'state', 'address',
+            'date_joined', 'last_login', 'is_active', 'is_staff',
+            'provider_profile'
+        )
+    
+    def get_provider_profile(self, obj):
+        """Retorna informações do perfil de prestador se existir"""
+        if obj.user_type == 'provider' and hasattr(obj, 'provider_profile'):
+            return {
+                'bio': obj.provider_profile.bio,
+                'experience_years': obj.provider_profile.experience_years,
+                'hourly_rate': str(obj.provider_profile.hourly_rate) if obj.provider_profile.hourly_rate else None,
+                'is_available': obj.provider_profile.is_available,
+                'rating': str(obj.provider_profile.rating),
+                'total_jobs': obj.provider_profile.total_jobs,
+                'service_categories': [cat.name for cat in obj.provider_profile.service_categories.all()]
+            }
+        return None
 
 
 class ServiceCategorySerializer(serializers.ModelSerializer):
@@ -201,5 +236,7 @@ class PasswordChangeSerializer(serializers.Serializer):
         """Salvar nova senha"""
         user = self.context['request'].user
         user.set_password(self.validated_data['new_password'])
+        # Desmarcar senha como temporária quando o usuário alterar
+        user.password_is_temporary = False
         user.save()
         return user

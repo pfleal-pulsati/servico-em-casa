@@ -10,6 +10,7 @@ import PublicRoute from './components/Auth/PublicRoute';
 import Home from './pages/Home';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import ChangePassword from './pages/Auth/ChangePassword';
 import NotFound from './pages/NotFound';
 import Notifications from './pages/Notifications';
 import Providers from './pages/Providers';
@@ -31,8 +32,11 @@ import Proposals from './pages/Provider/Proposals';
 import Jobs from './pages/Provider/Jobs';
 import ProviderProfile from './pages/Provider/Profile';
 
+// Master Pages
+import MasterPanel from './pages/Master/MasterPanel';
+
 function AppContent() {
-  const { loading, isAuthenticated, isClient, isProvider } = useAuth()
+  const { loading, isAuthenticated, isClient, isProvider, isMaster } = useAuth()
 
   if (loading) {
     return (
@@ -62,6 +66,14 @@ function AppContent() {
             <PublicRoute>
               <Register />
             </PublicRoute>
+          } 
+        />
+        <Route 
+          path="/change-password" 
+          element={
+            <ProtectedRoute>
+              <ChangePassword />
+            </ProtectedRoute>
           } 
         />
 
@@ -193,12 +205,28 @@ function AppContent() {
           } 
         />
 
+        {/* Rota do painel master */}
+        <Route 
+          path="/master-panel" 
+          element={
+            <ProtectedRoute requireMaster>
+              <Layout>
+                <MasterPanel />
+              </Layout>
+            </ProtectedRoute>
+          } 
+        />
+
         {/* Redirecionamentos */}
         <Route 
           path="/app" 
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+              isMaster ? (
+                <Navigate to="/master-panel" replace />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
             ) : (
               <Navigate to="/login" replace />
             )
