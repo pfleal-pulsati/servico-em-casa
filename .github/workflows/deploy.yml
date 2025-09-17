@@ -31,6 +31,14 @@ jobs:
         cd frontend
         npm run build
         
+    - name: Setup GitHub Pages files
+      run: |
+        cd frontend/dist
+        # Criar arquivo .nojekyll para evitar processamento Jekyll
+        touch .nojekyll
+        # Criar 404.html para roteamento SPA
+        cp index.html 404.html
+        
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
