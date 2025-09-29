@@ -27,10 +27,10 @@ services:
       - app-network
 
   backend:
-    build: ./pilipi-back
+    build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./pilipi-back:/app
+      - ./backend:/app
     ports:
       - "8000:8000"
     environment:
@@ -46,7 +46,7 @@ services:
       - app-network
 
   frontend:
-    build: ./pilipi-front
+    build: ./frontend
     ports:
       - "3000:3000"
     depends_on:
